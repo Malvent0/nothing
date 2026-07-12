@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XCrime Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0a0000;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 50%, rgba(255, 0, 0, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 50% 100%, rgba(255, 0, 0, 0.10) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0000 0%, #1a0000 50%, #0a0000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 0, 0, 0.03) 2px, rgba(255, 0, 0, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 0, 0, 0.03) 2px, rgba(255, 0, 0, 0.03) 4px);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            padding: 40px 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Шапка слева */
+        .header {
+            margin-bottom: 60px;
+        }
+
+        .header .title {
+            font-size: 48px;
+            font-weight: 900;
+            color: #000000;
+            text-shadow: 
+                0 0 20px rgba(255, 0, 0, 0.3),
+                0 0 40px rgba(255, 0, 0, 0.1);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header .title .percent {
+            color: #000000;
+            background: rgba(255, 0, 0, 0.15);
+            padding: 0 8px;
+            border-radius: 8px;
+        }
+
+        .header .title .community {
+            color: #000000;
+        }
+
+        .header .title .highlight {
+            color: #000000;
+            background: rgba(255, 0, 0, 0.10);
+            padding: 0 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 0, 0, 0.20);
+        }
+
+        /* Кнопки */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            margin: 40px 0 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 50px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 60px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-align: center;
+            min-width: 280px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn-red {
+            background: linear-gradient(135deg, #cc0000, #990000);
+            color: #ffffff;
+            border: 2px solid rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+        }
+
+        .btn-red:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.4);
+            background: linear-gradient(135deg, #dd1111, #aa0000);
+        }
+
+        .btn-black {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-black:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.2);
+            border-color: rgba(255, 0, 0, 0.3);
+            background: linear-gradient(135deg, #222222, #111111);
+        }
+
+        .btn-red-outline {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid #cc0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
+        }
+
+        .btn-red-outline:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.3);
+            background: rgba(204, 0, 0, 0.15);
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 0, 0, 0.1);
+        }
+
+        .footer .line1 {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .footer .line2 {
+            margin-top: 5px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .footer .line2 .dev {
+            color: rgba(255, 0, 0, 0.6);
+            font-weight: 600;
+        }
+
+        /* Анимация */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .glow-text {
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
+            .header .title {
+                font-size: 28px;
+                flex-wrap: wrap;
+            }
+            .btn {
+                padding: 14px 30px;
+                font-size: 16px;
+                min-width: 200px;
+                width: 100%;
+            }
+            .buttons {
+                gap: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .header .title {
+                font-size: 22px;
+            }
+            .btn {
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка слева -->
+        <div class="header">
+            <div class="title">
+                <span class="percent">X</span>
+                <span class="community">Community</span>
+                <span class="highlight">Crime</span>
+            </div>
+        </div>
+
+        <!-- Кнопки -->
+        <div class="buttons">
+            <a href="https://t.me/dreyblood" target="_blank" class="btn btn-red">Project XCrime →</a>
+            <a href="https://t.me/hitya" target="_blank" class="btn btn-black">Project Developer →</a>
+            <a href="https://t.me/m/n8Iu_npxZDJl" target="_blank" class="btn btn-red-outline">XCrime Bot Anti-Spam →</a>
+        </div>
+
+        <!-- Футер -->
+        <div class="footer">
+            <div class="line1">© X Community Crime</div>
+            <div class="line2">Создал разработчик: <span class="dev">Brotela</span></div>
+        </div>
+    </div>
+</body>
+                  </html>
